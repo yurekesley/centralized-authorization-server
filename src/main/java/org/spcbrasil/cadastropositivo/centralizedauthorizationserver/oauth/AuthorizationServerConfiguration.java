@@ -26,12 +26,15 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	private final DataSource tokenDataSource;
 	private final AuthenticationManager authenticationManager;
 
-	private JwtAccessTokenConverter jwtAccessTokenConverter;
-	private TokenStore tokenStore;
+	private final JwtAccessTokenConverter jwtAccessTokenConverter;
+	private final TokenStore tokenStore;
 
-	public AuthorizationServerConfiguration(final DataSource dataSource, AuthenticationManager authenticationManager) {
+	public AuthorizationServerConfiguration(final DataSource dataSource, AuthenticationManager authenticationManager,
+			JwtAccessTokenConverter jwtAccessTokenConverter, TokenStore tokenStore) {
 		this.tokenDataSource = dataSource;
 		this.authenticationManager = authenticationManager;
+		this.jwtAccessTokenConverter = jwtAccessTokenConverter;
+		this.tokenStore = tokenStore;
 	}
 
 	@Override
