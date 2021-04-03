@@ -23,20 +23,20 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 @EnableConfigurationProperties(SecurityProperties.class)
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
-	private final DataSource dataSource;
+	private final DataSource tokenDataSource;
 	private final AuthenticationManager authenticationManager;
 
 	private JwtAccessTokenConverter jwtAccessTokenConverter;
 	private TokenStore tokenStore;
 
 	public AuthorizationServerConfiguration(final DataSource dataSource, AuthenticationManager authenticationManager) {
-		this.dataSource = dataSource;
+		this.tokenDataSource = dataSource;
 		this.authenticationManager = authenticationManager;
 	}
 
 	@Override
 	public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.jdbc(this.dataSource);
+		clients.jdbc(this.tokenDataSource);
 	}
 
 	@Override
