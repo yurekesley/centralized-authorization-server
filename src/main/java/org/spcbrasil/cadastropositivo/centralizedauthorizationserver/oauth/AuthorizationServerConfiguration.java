@@ -3,10 +3,10 @@ package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.oauth;
 import javax.sql.DataSource;
 
 import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.security.SecurityProperties;
+import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.security.service.JdbcCustomUserDetailsService;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -27,17 +27,15 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
 	private final DataSource dataSource;
 	private final AuthenticationManager authenticationManager;
-	private final UserDetailsService userDetailsService;
 	private final PasswordEncoder passwordEncoder;
 
 	private JwtAccessTokenConverter jwtAccessTokenConverter;
 	private TokenStore tokenStore;
 
 	public AuthorizationServerConfiguration(final DataSource dataSource, AuthenticationManager authenticationManager,
-			final UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+			PasswordEncoder passwordEncoder) {
 		this.dataSource = dataSource;
 		this.authenticationManager = authenticationManager;
-		this.userDetailsService = userDetailsService;
 		this.passwordEncoder = passwordEncoder;
 	}
 
@@ -49,7 +47,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	@Override
 	public void configure(final AuthorizationServerEndpointsConfigurer endpoints) {
 		endpoints.authenticationManager(this.authenticationManager).accessTokenConverter(this.jwtAccessTokenConverter)
-				.userDetailsService(this.userDetailsService).tokenStore(this.tokenStore);
+				.tokenStore(this.tokenStore);
 	}
 
 	@Override

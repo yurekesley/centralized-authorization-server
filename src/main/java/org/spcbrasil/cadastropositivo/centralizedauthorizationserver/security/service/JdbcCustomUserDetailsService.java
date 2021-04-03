@@ -1,4 +1,4 @@
-package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.security;
+package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.security.service;
 
 import javax.sql.DataSource;
 
