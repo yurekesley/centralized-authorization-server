@@ -41,9 +41,15 @@ public class WebSecurityAdapter extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.headers().frameOptions().disable();
-
-		http.csrf().disable().authorizeRequests().antMatchers("/resources/", "/webjars/", "/assets/").permitAll()
-				.antMatchers("/h2-console/**").permitAll();
+		http.csrf().disable()
+      	.authorizeRequests()
+    	.antMatchers("/login").permitAll()
+    	.antMatchers("/h2-console/*").permitAll()
+        .antMatchers("/oauth/authorize").authenticated()
+        .anyRequest().authenticated();
+//     .and().formLogin().permitAll().authenticationDetailsSource(authenticationDetailsSource)
+//     .addFilterAfter(new CustomImplicitAuthenticationFilter(spcAuthenticationEventPublisher()), SecurityContextPersistenceFilter.class);
+        
 
 	}
 
