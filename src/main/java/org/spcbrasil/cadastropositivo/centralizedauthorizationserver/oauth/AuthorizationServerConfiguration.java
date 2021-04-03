@@ -3,11 +3,9 @@ package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.oauth;
 import javax.sql.DataSource;
 
 import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.security.SecurityProperties;
-import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.security.service.JdbcCustomUserDetailsService;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -27,16 +25,13 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
 	private final DataSource dataSource;
 	private final AuthenticationManager authenticationManager;
-	private final PasswordEncoder passwordEncoder;
 
 	private JwtAccessTokenConverter jwtAccessTokenConverter;
 	private TokenStore tokenStore;
 
-	public AuthorizationServerConfiguration(final DataSource dataSource, AuthenticationManager authenticationManager,
-			PasswordEncoder passwordEncoder) {
+	public AuthorizationServerConfiguration(final DataSource dataSource, AuthenticationManager authenticationManager) {
 		this.dataSource = dataSource;
 		this.authenticationManager = authenticationManager;
-		this.passwordEncoder = passwordEncoder;
 	}
 
 	@Override
@@ -52,8 +47,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
 	@Override
 	public void configure(final AuthorizationServerSecurityConfigurer oauthServer) {
-		oauthServer.passwordEncoder(this.passwordEncoder).tokenKeyAccess("permitAll()")
-				.checkTokenAccess("isAuthenticated()");
+		oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
 	}
 
 }
