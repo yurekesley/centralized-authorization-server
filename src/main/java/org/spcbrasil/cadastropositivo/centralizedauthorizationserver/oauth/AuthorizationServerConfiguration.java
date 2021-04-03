@@ -1,7 +1,8 @@
-package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.security;
+package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.oauth;
 
 import javax.sql.DataSource;
 
+import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.security.SecurityProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
