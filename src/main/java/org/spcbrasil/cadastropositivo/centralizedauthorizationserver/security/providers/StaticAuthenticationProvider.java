@@ -35,7 +35,8 @@ public class StaticAuthenticationProvider implements AuthenticationProvider {
 		PasswordEncoder passwordEncoder = NoOpPasswordEncoder.getInstance();
 
 		UserDetails user = userDetailsService.loadUserByUsername(username);
-		if (passwordEncoder.matches(password, user.getPassword())) {
+
+		if ((username.equals(user.getUsername())) && passwordEncoder.matches(password, user.getPassword())) {
 			return new UsernamePasswordAuthentication(username, password, user.getAuthorities());
 		}
 

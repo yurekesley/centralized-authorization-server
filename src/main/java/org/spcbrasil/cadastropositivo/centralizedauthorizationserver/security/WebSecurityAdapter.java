@@ -35,11 +35,11 @@ public class WebSecurityAdapter extends WebSecurityConfigurerAdapter {
 	protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(jdbcAuthenticationProvider);
 		auth.authenticationProvider(staticAuthenticationProvider);
+
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-
 		http.headers().frameOptions().disable();
 
 		http.csrf().disable().authorizeRequests().antMatchers("/resources/", "/webjars/", "/assets/").permitAll()
