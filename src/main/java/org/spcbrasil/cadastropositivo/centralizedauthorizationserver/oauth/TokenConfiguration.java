@@ -32,6 +32,7 @@ public class TokenConfiguration {
 		if (tokenStore == null) {
 			tokenStore = new JwtTokenStore(jwtAccessTokenConverter());
 		}
+
 		return tokenStore;
 	}
 

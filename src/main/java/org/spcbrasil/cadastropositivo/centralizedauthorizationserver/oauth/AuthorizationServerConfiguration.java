@@ -23,7 +23,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 @EnableConfigurationProperties(SecurityProperties.class)
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
-	private final DataSource tokenDataSource;
+	private final DataSource dataSource;
 	private final AuthenticationManager authenticationManager;
 
 	private final JwtAccessTokenConverter jwtAccessTokenConverter;
@@ -31,7 +31,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
 	public AuthorizationServerConfiguration(final DataSource dataSource, AuthenticationManager authenticationManager,
 			JwtAccessTokenConverter jwtAccessTokenConverter, TokenStore tokenStore) {
-		this.tokenDataSource = dataSource;
+		this.dataSource = dataSource;
 		this.authenticationManager = authenticationManager;
 		this.jwtAccessTokenConverter = jwtAccessTokenConverter;
 		this.tokenStore = tokenStore;
@@ -39,12 +39,13 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
 	@Override
 	public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.jdbc(this.tokenDataSource);
+		clients.jdbc(this.dataSource);
 	}
 
 	@Override
 	public void configure(final AuthorizationServerEndpointsConfigurer endpoints) {
-		endpoints.authenticationManager(this.authenticationManager).accessTokenConverter(this.jwtAccessTokenConverter)
+		endpoints.authenticationManager(this.authenticationManager)
+				.accessTokenConverter(this.jwtAccessTokenConverter)
 				.tokenStore(this.tokenStore);
 	}
 

@@ -21,3 +21,5 @@ security:
     key-store-password: spcbrasil
     key-pair-alias: spcbrasil.org.br
     key-pair-password: spcbrasil
+docker:
+  registry: yure.teste.com

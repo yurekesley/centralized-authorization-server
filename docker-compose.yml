@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+  centralized-authorization-server:
+    image: artifactory.spcdc.org.br/cadpos/centralized-authorization-server:latest
+    logging:
+      driver: json-file
+    volumes:
+      - /export/swarm_dev/app/store:/app-store
+    environment:
+      TZ: America/Sao_Paulo
+      JAVA_OPTS: "-Xms768m -Xmx768m"
+      SPRING_PROFILES_ACTIVE: TESTE_YURE
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ps -ef | grep centralized-authorization-server.jar | grep -v grep | wc -l || exit 1
+      interval: 1m30s
+      timeout: 30s
+      retries: 3
+    networks:
+      cadpos_net:
+        aliases:
+          - centralized-authorization-server
+
+networks:
+  cadpos_net:
+    external: true
