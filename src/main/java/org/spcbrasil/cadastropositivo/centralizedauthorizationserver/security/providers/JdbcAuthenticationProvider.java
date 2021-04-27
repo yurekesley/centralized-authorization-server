@@ -41,8 +41,8 @@ public class JdbcAuthenticationProvider implements AuthenticationProvider {
 	}
 
 	@Override
-	public boolean supports(Class<?> aClass) {
-		return UsernamePasswordAuthenticationToken.class.equals(aClass);
+	public boolean supports(Class<?> clazz) {
+		return UsernamePasswordAuthenticationToken.class.equals(clazz);
 	}
 
 }
