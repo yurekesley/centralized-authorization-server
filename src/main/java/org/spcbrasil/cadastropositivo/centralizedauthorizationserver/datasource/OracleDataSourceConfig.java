@@ -20,12 +20,15 @@ import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ * @author yure.placido
+ */
 @Configuration
 @EnableJpaRepositories(basePackages = OracleDataSourceConfig.REPOSITORIES_PACKAGE, entityManagerFactoryRef = "ordersEntityManagerFactory", transactionManagerRef = "ordersTransactionManager")
 public class OracleDataSourceConfig {
 
-    static final String REPOSITORIES_PACKAGE = "br.com.yurekesley.workingwithmultipledatabases.order.repositories";
-    static final String REPOSITORIES_ENTITIES = "br.com.yurekesley.workingwithmultipledatabases.order.entities";
+    static final String REPOSITORIES_PACKAGE = "org.spcbrasil.cadastropositivo.centralizedauthorizationserver.datasource.oracle.repository";
+    static final String REPOSITORIES_ENTITIES = "org.spcbrasil.cadastropositivo.centralizedauthorizationserver.datasource.oracle.entity";
 
     private static final String USER = "user";
     private static final String URL = "URL";
@@ -69,7 +72,6 @@ public class OracleDataSourceConfig {
         return pf;
     }
 
-
     @Bean("oracleEntityManagerFactory")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(@Qualifier("oracle") DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
@@ -88,6 +90,5 @@ public class OracleDataSourceConfig {
         EntityManagerFactory factory = entityManagerFactory(dataSource).getObject();
         return new JpaTransactionManager(factory);
     }
-
 
 }

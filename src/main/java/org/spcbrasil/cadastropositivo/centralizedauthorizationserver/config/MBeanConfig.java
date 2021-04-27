@@ -4,6 +4,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jmx.export.MBeanExporter;
 
+/**
+ * @author yure.placido
+ */
 @Configuration
 public class MBeanConfig {
 

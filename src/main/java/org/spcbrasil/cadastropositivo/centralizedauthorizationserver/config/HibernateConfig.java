@@ -9,7 +9,6 @@ public class HibernateConfig {
 
     private HBM2DDL hbm2ddl;
     private Boolean showSql;
-    private String auto;
 
     public HBM2DDL getHbm2ddl() {
         return hbm2ddl;
