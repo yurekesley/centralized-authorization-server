@@ -1,11 +1,9 @@
-app: 
-  store: C:/dev/store
-  module: 
-    oracle: 
-      enabled: true
-      
 spring:
-  datasource:  
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
     hikari:
       connection-timeout: 30000
       minimum-idle: 5
@@ -13,29 +11,39 @@ spring:
       idle-timeout: 300000
       max-lifetime: 1200000
   jpa:
-
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: true
+  allowed:
+     resources: /h2-console/**
 security:
   jwt:
     key-store: classpath:keystore.jks
     key-store-password: spcbrasil
     key-pair-alias: spcbrasil.org.br
     key-pair-password: spcbrasil
-
-
+docker:
+  registry: yure.teste.com
 
 datasource:
     oracle:
       connectionFactoryClassName: oracle.jdbc.pool.OracleDataSource
-      keyfile: ${app.store}/key/spcjava.cer
-      passwordfile:  ${app.store}/key/cadpos-usr-db-pwd-HOMOLOG.key
+      keyfile: C:/dev/store/key/spcjava.cer
+      passwordfile: C:/dev/store/key/cadpos-usr-db-pwd-HOMOLOG.key
       connectionpoolname: cadpos-datasource-pool
       minPoolSize: 1
       maxPoolSize: 30
       jdbcUrl: jdbc:oracle:thin:@//sp-hmdb-scan.spcdc.br:1521/SPCHMSP
       jdbcUser: usr_cadpos
+      message: teste
       hibernateShowSQL: false
 
 hibernate:
   hbm2ddl:
-    auto: none
-  show-sql: false
+    auto: validate
+  show-sql: true

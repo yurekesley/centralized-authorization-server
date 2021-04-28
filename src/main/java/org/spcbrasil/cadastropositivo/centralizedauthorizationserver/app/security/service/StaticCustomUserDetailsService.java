@@ -1,4 +1,4 @@
-package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.security.service;
+package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.security.service;
 
 import java.util.Arrays;
 

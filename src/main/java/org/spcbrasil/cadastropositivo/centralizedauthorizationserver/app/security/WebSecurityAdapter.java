@@ -1,7 +1,7 @@
-package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.security;
+package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.security;
 
-import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.security.providers.JdbcAuthenticationProvider;
-import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.security.providers.StaticAuthenticationProvider;
+import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.security.providers.JdbcAuthenticationProvider;
+import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.security.providers.StaticAuthenticationProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -41,15 +41,10 @@ public class WebSecurityAdapter extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.headers().frameOptions().disable();
-		http.csrf().disable()
-      	.authorizeRequests()
-    	.antMatchers("/login").permitAll()
-    	.antMatchers("/h2-console/*").permitAll()
-        .antMatchers("/oauth/authorize").authenticated()
-        .anyRequest().authenticated();
+		http.csrf().disable().authorizeRequests().antMatchers("/login").permitAll().antMatchers("/h2-console/*")
+				.permitAll().antMatchers("/oauth/authorize").authenticated().anyRequest().authenticated();
 //     .and().formLogin().permitAll().authenticationDetailsSource(authenticationDetailsSource)
 //     .addFilterAfter(new CustomImplicitAuthenticationFilter(spcAuthenticationEventPublisher()), SecurityContextPersistenceFilter.class);
-        
 
 	}
 

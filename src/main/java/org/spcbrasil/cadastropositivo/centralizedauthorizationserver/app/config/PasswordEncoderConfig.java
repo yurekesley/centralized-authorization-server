@@ -1,8 +1,10 @@
-package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.security;
+package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.config;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.MessageDigestPasswordEncoder;
@@ -12,8 +14,17 @@ import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 
 /**
  * @author yure.placido
- *
  */
+@Configuration
+public class PasswordEncoderConfig {
+
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return DefaultPasswordEncoderFactories.createDelegatingPasswordEncoder();
+	}
+
+}
+
 @SuppressWarnings("deprecation")
 class DefaultPasswordEncoderFactories {
 

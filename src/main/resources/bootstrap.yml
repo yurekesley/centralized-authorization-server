@@ -1,2 +1,3 @@
-app:
-  store: C:/dev/store
+
+docker:
+  registry: artifactory.spcdc.org.br

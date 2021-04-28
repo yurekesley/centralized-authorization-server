@@ -1,4 +1,4 @@
-package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.security.authentications;
+package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.security.authentications;
 
 import java.util.Collection;
 

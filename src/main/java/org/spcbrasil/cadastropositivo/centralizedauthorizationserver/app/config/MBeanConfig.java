@@ -1,4 +1,4 @@
-package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.config;
+package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,7 +13,7 @@ public class MBeanConfig {
     @Bean
     public MBeanExporter exporter() {
         final MBeanExporter exporter = new MBeanExporter();
-        exporter.setExcludedBeans(new String[]{"oracle"});
+        exporter.setExcludedBeans(new String[] { "oracle" });
         return exporter;
     }
 }

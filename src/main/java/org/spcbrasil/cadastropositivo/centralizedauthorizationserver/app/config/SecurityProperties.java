@@ -1,4 +1,4 @@
-package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.security;
+package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.core.io.Resource;

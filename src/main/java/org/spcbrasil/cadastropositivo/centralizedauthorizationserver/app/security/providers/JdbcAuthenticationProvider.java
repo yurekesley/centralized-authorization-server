@@ -1,14 +1,13 @@
-package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.security.providers;
+package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.security.providers;
 
-import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.security.authentications.UsernamePasswordAuthentication;
-import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.security.service.StaticCustomUserDetailsService;
+import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.security.authentications.UsernamePasswordAuthentication;
+import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.security.service.JdbcCustomUserDetailsService;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -17,14 +16,15 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-@SuppressWarnings("deprecation")
-public class StaticAuthenticationProvider implements AuthenticationProvider {
+public class JdbcAuthenticationProvider implements AuthenticationProvider {
 
-	private final StaticCustomUserDetailsService userDetailsService;
+	private final JdbcCustomUserDetailsService userDetailsService;
+	private final PasswordEncoder passwordEncoder;
 
-	public StaticAuthenticationProvider(StaticCustomUserDetailsService userDetailsService,
+	public JdbcAuthenticationProvider(JdbcCustomUserDetailsService userDetailsService,
 			PasswordEncoder passwordEncoder) {
 		this.userDetailsService = userDetailsService;
+		this.passwordEncoder = passwordEncoder;
 	}
 
 	@Override
@@ -32,11 +32,8 @@ public class StaticAuthenticationProvider implements AuthenticationProvider {
 		String username = authentication.getName();
 		String password = (String) authentication.getCredentials();
 
-		PasswordEncoder passwordEncoder = NoOpPasswordEncoder.getInstance();
-
 		UserDetails user = userDetailsService.loadUserByUsername(username);
-
-		if ((username.equals(user.getUsername())) && passwordEncoder.matches(password, user.getPassword())) {
+		if (passwordEncoder.matches(password, user.getPassword())) {
 			return new UsernamePasswordAuthentication(username, password, user.getAuthorities());
 		}
 
@@ -44,8 +41,8 @@ public class StaticAuthenticationProvider implements AuthenticationProvider {
 	}
 
 	@Override
-	public boolean supports(Class<?> aClass) {
-		return UsernamePasswordAuthenticationToken.class.equals(aClass);
+	public boolean supports(Class<?> clazz) {
+		return UsernamePasswordAuthenticationToken.class.equals(clazz);
 	}
 
 }
