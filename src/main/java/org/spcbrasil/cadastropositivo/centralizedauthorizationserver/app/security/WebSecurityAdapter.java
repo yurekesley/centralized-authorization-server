@@ -1,9 +1,11 @@
 package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.security;
 
-import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.security.providers.JdbcAuthenticationProvider;
-import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.security.providers.StaticAuthenticationProvider;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,13 +18,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity
 public class WebSecurityAdapter extends WebSecurityConfigurerAdapter {
 
-	private final JdbcAuthenticationProvider jdbcAuthenticationProvider;
-	private final StaticAuthenticationProvider staticAuthenticationProvider;
+	private final List<AuthenticationProvider> providers;
 
-	public WebSecurityAdapter(JdbcAuthenticationProvider jdbcAuthenticationProvider,
-			StaticAuthenticationProvider staticAuthenticationProvider) {
-		this.jdbcAuthenticationProvider = jdbcAuthenticationProvider;
-		this.staticAuthenticationProvider = staticAuthenticationProvider;
+	public WebSecurityAdapter(@Autowired(required = false) List<AuthenticationProvider> prividers) {
+		this.providers = prividers;
 	}
 
 	@Bean
@@ -33,9 +32,8 @@ public class WebSecurityAdapter extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
-		auth.authenticationProvider(jdbcAuthenticationProvider);
-		auth.authenticationProvider(staticAuthenticationProvider);
-
+		if (providers != null)
+			providers.forEach(provide -> auth.authenticationProvider(provide));
 	}
 
 	@Override
@@ -43,8 +41,6 @@ public class WebSecurityAdapter extends WebSecurityConfigurerAdapter {
 		http.headers().frameOptions().disable();
 		http.csrf().disable().authorizeRequests().antMatchers("/login").permitAll().antMatchers("/h2-console/*")
 				.permitAll().antMatchers("/oauth/authorize").authenticated().anyRequest().authenticated();
-//     .and().formLogin().permitAll().authenticationDetailsSource(authenticationDetailsSource)
-//     .addFilterAfter(new CustomImplicitAuthenticationFilter(spcAuthenticationEventPublisher()), SecurityContextPersistenceFilter.class);
 
 	}
 

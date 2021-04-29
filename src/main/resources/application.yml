@@ -21,8 +21,6 @@ security:
     key-pair-alias: spcbrasil.org.br
     key-pair-password: spcbrasil
 
-
-
 datasource:
     oracle:
       connectionFactoryClassName: oracle.jdbc.pool.OracleDataSource

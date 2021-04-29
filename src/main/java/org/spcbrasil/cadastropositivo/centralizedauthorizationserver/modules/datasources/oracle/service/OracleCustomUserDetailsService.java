@@ -1,7 +1,8 @@
-package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.security.service;
+package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.modules.datasources.oracle.service;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,11 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Component
 @Transactional
-public class JdbcCustomUserDetailsService implements UserDetailsService {
+public class OracleCustomUserDetailsService implements UserDetailsService {
 
 	private final DataSource dataSource;
 
-	public JdbcCustomUserDetailsService(DataSource dataSource) {
+	public OracleCustomUserDetailsService(@Qualifier("oracle") DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 

@@ -1,13 +1,13 @@
-package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.security.providers;
+package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.modules.datasources.oracle.prividers;
 
 import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.security.authentications.UsernamePasswordAuthentication;
-import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.security.service.JdbcCustomUserDetailsService;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -16,15 +16,14 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class JdbcAuthenticationProvider implements AuthenticationProvider {
+public class JdbcTemplateOracleProvider implements AuthenticationProvider {
 
-	private final JdbcCustomUserDetailsService userDetailsService;
 	private final PasswordEncoder passwordEncoder;
+	private final UserDetailsService userDetailsService;
 
-	public JdbcAuthenticationProvider(JdbcCustomUserDetailsService userDetailsService,
-			PasswordEncoder passwordEncoder) {
-		this.userDetailsService = userDetailsService;
+	public JdbcTemplateOracleProvider(PasswordEncoder passwordEncoder, UserDetailsService userDetailsService) {
 		this.passwordEncoder = passwordEncoder;
+		this.userDetailsService = userDetailsService;
 	}
 
 	@Override
@@ -36,8 +35,7 @@ public class JdbcAuthenticationProvider implements AuthenticationProvider {
 		if (passwordEncoder.matches(password, user.getPassword())) {
 			return new UsernamePasswordAuthentication(username, password, user.getAuthorities());
 		}
-
-		throw new BadCredentialsException(":(");
+		throw new BadCredentialsException("Bad Credentials!");
 	}
 
 	@Override
