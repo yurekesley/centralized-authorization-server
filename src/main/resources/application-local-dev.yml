@@ -5,7 +5,7 @@ app:
     h2: 
       enabled: true
     oracle:
-      enabled: false
+      enabled: true
           
 spring:
   datasource:

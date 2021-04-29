@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 /**
  * @author yure.placido
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class H2DataSourceConfig {
 
+	@Primary
 	@Bean("h2")
 	public DataSource h2() {
 		DataSourceBuilder<?> dataSourceBuilder = DataSourceBuilder.create();
