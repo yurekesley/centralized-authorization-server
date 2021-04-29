@@ -1,7 +1,6 @@
 package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.oauth;
 
-import javax.sql.DataSource;
-
+import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.config.AuthDriverHandler;
 import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.config.SecurityProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -23,15 +22,16 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 @EnableConfigurationProperties(SecurityProperties.class)
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
-	private final DataSource dataSource;
+	private final AuthDriverHandler authDriverHandler;
 	private final AuthenticationManager authenticationManager;
 
 	private final JwtAccessTokenConverter jwtAccessTokenConverter;
 	private final TokenStore tokenStore;
 
-	public AuthorizationServerConfiguration(final DataSource dataSource, AuthenticationManager authenticationManager,
-			JwtAccessTokenConverter jwtAccessTokenConverter, TokenStore tokenStore) {
-		this.dataSource = dataSource;
+	public AuthorizationServerConfiguration(final AuthDriverHandler authDriverHandler,
+			AuthenticationManager authenticationManager, JwtAccessTokenConverter jwtAccessTokenConverter,
+			TokenStore tokenStore) {
+		this.authDriverHandler = authDriverHandler;
 		this.authenticationManager = authenticationManager;
 		this.jwtAccessTokenConverter = jwtAccessTokenConverter;
 		this.tokenStore = tokenStore;
@@ -39,13 +39,12 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
 	@Override
 	public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.jdbc(this.dataSource);
+		clients.jdbc(authDriverHandler.dataSource());
 	}
 
 	@Override
 	public void configure(final AuthorizationServerEndpointsConfigurer endpoints) {
-		endpoints.authenticationManager(this.authenticationManager)
-				.accessTokenConverter(this.jwtAccessTokenConverter)
+		endpoints.authenticationManager(this.authenticationManager).accessTokenConverter(this.jwtAccessTokenConverter)
 				.tokenStore(this.tokenStore);
 	}
 

@@ -13,7 +13,7 @@ public class MBeanConfig {
     @Bean
     public MBeanExporter exporter() {
         final MBeanExporter exporter = new MBeanExporter();
-        exporter.setExcludedBeans(new String[] { "oracle" });
+        exporter.setExcludedBeans(new String[] { "oracle", "h2"});
         return exporter;
     }
 }
