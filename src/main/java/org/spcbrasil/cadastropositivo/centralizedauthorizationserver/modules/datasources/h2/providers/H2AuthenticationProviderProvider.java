@@ -16,12 +16,12 @@ import org.springframework.stereotype.Component;
  *
  */
 @Component
-public class JdbcTemplateOracleProvider implements AuthenticationProvider {
+public class H2AuthenticationProviderProvider implements AuthenticationProvider {
 
 	private final PasswordEncoder passwordEncoder;
 	private final H2UserDetailsService userDetailsService;
 
-	public JdbcTemplateOracleProvider(PasswordEncoder passwordEncoder, H2UserDetailsService userDetailsService) {
+	public H2AuthenticationProviderProvider(PasswordEncoder passwordEncoder, H2UserDetailsService userDetailsService) {
 		this.passwordEncoder = passwordEncoder;
 		this.userDetailsService = userDetailsService;
 	}
