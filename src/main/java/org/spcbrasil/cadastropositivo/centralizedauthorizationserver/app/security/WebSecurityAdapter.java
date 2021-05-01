@@ -33,15 +33,19 @@ public class WebSecurityAdapter extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
 		if (providers != null)
-			providers.forEach(provide -> auth.authenticationProvider(provide));
+			providers.forEach(provide -> {
+				auth.authenticationProvider(provide);
+			});
 	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		// @formatter:off
 		http.headers().frameOptions().disable();
 		http.csrf().disable().authorizeRequests().antMatchers("/login").permitAll().antMatchers("/h2-console/*")
-				.permitAll().antMatchers("/oauth/authorize").authenticated().anyRequest().authenticated();
-
+				.permitAll().antMatchers("/tokens/**").permitAll().antMatchers("/oauth/authorize").authenticated()
+				.anyRequest().authenticated();
+		// @formatter:on
 	}
 
 }

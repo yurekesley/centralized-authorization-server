@@ -3,8 +3,10 @@ package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.oauth;
 import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.config.AuthDriverHandler;
 import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.config.SecurityProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -44,7 +46,8 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
 	@Override
 	public void configure(final AuthorizationServerEndpointsConfigurer endpoints) {
-		endpoints.authenticationManager(this.authenticationManager).accessTokenConverter(this.jwtAccessTokenConverter)
+		endpoints.authenticationManager(this.authenticationManager)
+				.accessTokenConverter(this.jwtAccessTokenConverter)
 				.tokenStore(this.tokenStore);
 	}
 
@@ -52,5 +55,5 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 	public void configure(final AuthorizationServerSecurityConfigurer oauthServer) {
 		oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
 	}
-
+	
 }

@@ -24,7 +24,7 @@ datasource:
       maxPoolSize: 30
       jdbcUrl: jdbc:oracle:thin:@//db-dev.spcdc.br:1521/SPCDESSP
       jdbcUser: usrjava
-      hibernateShowSQL: false
+      hibernateShowSQL: true
 
 hibernate:
   hbm2ddl:

@@ -38,17 +38,23 @@ docker:
 datasource:
     oracle:
       connectionFactoryClassName: oracle.jdbc.pool.OracleDataSource
-      keyfile: C:/dev/store/key/spcjava.cer
-      passwordfile: C:/dev/store/key/cadpos-usr-db-pwd-HOMOLOG.key
+      keyfile: ${app.store}/key/spcjava.cer
+      passwordfile: ${app.store}/key/usrjava-db-pwd-DEV.key
       connectionpoolname: cadpos-datasource-pool
       minPoolSize: 1
       maxPoolSize: 30
-      jdbcUrl: jdbc:oracle:thin:@//sp-hmdb-scan.spcdc.br:1521/SPCHMSP
-      jdbcUser: usr_cadpos
+      jdbcUrl: jdbc:oracle:thin:@//db-dev.spcdc.br:1521/SPCDESSP
+      jdbcUser: usrjava
       message: teste
-      hibernateShowSQL: false
+      hibernateShowSQL: true
 
 hibernate:
   hbm2ddl:
     auto: validate
   show-sql: true
+
+logging:
+  level:
+    root: DEBUG
+
+  
