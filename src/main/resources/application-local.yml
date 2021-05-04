@@ -1,9 +1,7 @@
 app: 
   auth: 
-    driver: h2
+    driver: oracle
   module: 
-    h2: 
-      enabled: true
     oracle:
       enabled: true
           

@@ -6,12 +6,18 @@ import org.junit.Test;
 import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.config.encoder.PasswordEncoderConfig;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * @author yure.placido
+ *
+ */
 public class PasswordEncoderConfigTest {
 
 	private PasswordEncoderConfig config = new PasswordEncoderConfig();
-	
-	/* @Test senhas do spc tem um encriptador padrao dependente de uma versão antiga do spring, verificar se devemos implementar 
-		ou forçar a atualização de senha para um encriptador padrao 
+
+	/*
+	 * @Test senhas do spc tem um encriptador padrao dependente de uma versão antiga
+	 * do spring, verificar se devemos implementar ou forçar a atualização de senha
+	 * para um encriptador padrao
 	 **/
 	public void deveCombinarSenhaComEncoderPadrao() {
 		PasswordEncoder passwordEncoder = config.passwordEncoder();
@@ -25,6 +31,14 @@ public class PasswordEncoderConfigTest {
 		PasswordEncoder passwordEncoder = config.passwordEncoder();
 		boolean matches = passwordEncoder.matches("secret",
 				"{bcrypt}$2a$10$vCXMWCn7fDZWOcLnIEhmK.74dvK1Eh8ae2WrWlhr2ETPLoxQctN4.");
+		assertTrue(matches);
+	}
+
+	@Test
+	public void deveCombinarSenhaComEncoderSHA256() {
+		PasswordEncoder passwordEncoder = config.passwordEncoder();
+		boolean matches = passwordEncoder.matches("secret",
+				"{SHA-256}2bb80d537b1da3e38bd30361aa855686bde0eacd7162fef6a25fe97bf527a25b");
 		assertTrue(matches);
 	}
 
