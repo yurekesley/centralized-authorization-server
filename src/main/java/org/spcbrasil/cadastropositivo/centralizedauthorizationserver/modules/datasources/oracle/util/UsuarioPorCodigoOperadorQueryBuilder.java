@@ -29,11 +29,11 @@ public class UsuarioPorCodigoOperadorQueryBuilder {
 		sb.append(" , DECODE(op.tip_operador, 'P','processador','E', 'entidade','A', 'associado') tipo ");
 		sb.append(" , op.id_perfil idPerfil ");
 		sb.append(" , so.des_senha senha ");
-		sb.append(" FROM spcjava.operador op ");
-		sb.append(" , spcjava.associado a ");
-		sb.append(" , spcjava.entidade e ");
-		sb.append(" , spcjava.entidade ea ");
-		sb.append(" , spcjava.senha_operador so ");
+		sb.append(" FROM operador op ");
+		sb.append(" , associado a ");
+		sb.append(" , entidade e ");
+		sb.append(" , entidade ea ");
+		sb.append(" , senha_operador so ");
 		sb.append("  WHERE 1 = 1  ");
 		sb.append("  AND so.id_operador = op.id   ");
 		sb.append("  AND op.id_associado = a.id(+)   ");
