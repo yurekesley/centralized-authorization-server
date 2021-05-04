@@ -1,5 +1,5 @@
 app: 
-  store: C:/dev/store
+  store: ${STORE}
   auth: 
     driver: oracle
   module: 

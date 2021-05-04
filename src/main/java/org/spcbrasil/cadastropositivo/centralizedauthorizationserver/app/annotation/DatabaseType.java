@@ -5,7 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.config.DatabaseTypeCondition;
+import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.config.dataSource.DatabaseTypeCondition;
 import org.springframework.context.annotation.Conditional;
 
 @Target({ ElementType.TYPE, ElementType.METHOD })

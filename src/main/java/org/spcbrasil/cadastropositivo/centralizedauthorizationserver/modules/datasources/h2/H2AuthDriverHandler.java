@@ -3,7 +3,7 @@ package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.modules.da
 import javax.sql.DataSource;
 
 import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.annotation.DatabaseType;
-import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.config.AuthDriverHandler;
+import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.config.dataSource.AuthDataSourceHandler;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +17,7 @@ import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
  */
 @Configuration
 @DatabaseType("h2")
-public class H2AuthDriverHandler implements AuthDriverHandler {
+public class H2AuthDriverHandler implements AuthDataSourceHandler {
 
 	private final DataSource dataSource;
 

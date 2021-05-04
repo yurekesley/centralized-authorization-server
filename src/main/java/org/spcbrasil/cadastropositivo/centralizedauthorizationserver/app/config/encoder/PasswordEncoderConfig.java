@@ -1,4 +1,4 @@
-package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.config;
+package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.config.encoder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,7 +51,7 @@ class DefaultPasswordEncoderFactories {
 		encoders.put("sha256", sha256);
 
 		DelegatingPasswordEncoder delegatingPasswordEncoder = new DelegatingPasswordEncoder(encodingId, encoders);
-		delegatingPasswordEncoder.setDefaultPasswordEncoderForMatches(new ShaPasswordEncoder());
+		delegatingPasswordEncoder.setDefaultPasswordEncoderForMatches(new MessageDigestPasswordEncoder("SHA-256"));
 		return delegatingPasswordEncoder;
 	}
 

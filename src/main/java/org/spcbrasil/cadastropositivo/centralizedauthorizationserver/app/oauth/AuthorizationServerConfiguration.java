@@ -1,12 +1,10 @@
 package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.oauth;
 
-import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.config.AuthDriverHandler;
 import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.config.SecurityProperties;
+import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.config.dataSource.AuthDataSourceHandler;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -24,16 +22,16 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 @EnableConfigurationProperties(SecurityProperties.class)
 public class AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
 
-	private final AuthDriverHandler authDriverHandler;
+	private final AuthDataSourceHandler authDataSourceHandler;
 	private final AuthenticationManager authenticationManager;
 
 	private final JwtAccessTokenConverter jwtAccessTokenConverter;
 	private final TokenStore tokenStore;
 
-	public AuthorizationServerConfiguration(final AuthDriverHandler authDriverHandler,
+	public AuthorizationServerConfiguration(final AuthDataSourceHandler authDataSourceHandler,
 			AuthenticationManager authenticationManager, JwtAccessTokenConverter jwtAccessTokenConverter,
 			TokenStore tokenStore) {
-		this.authDriverHandler = authDriverHandler;
+		this.authDataSourceHandler = authDataSourceHandler;
 		this.authenticationManager = authenticationManager;
 		this.jwtAccessTokenConverter = jwtAccessTokenConverter;
 		this.tokenStore = tokenStore;
@@ -41,7 +39,7 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
 
 	@Override
 	public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
-		clients.jdbc(authDriverHandler.dataSource());
+		clients.jdbc(authDataSourceHandler.dataSource());
 	}
 
 	@Override

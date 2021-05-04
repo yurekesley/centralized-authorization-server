@@ -3,7 +3,7 @@ package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.modules.da
 import javax.sql.DataSource;
 
 import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.annotation.DatabaseType;
-import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.config.AuthDriverHandler;
+import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.config.dataSource.AuthDataSourceHandler;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @DatabaseType("oracle")
-public class OracleAuthDriverHandler implements AuthDriverHandler {
+public class OracleAuthDriverHandler implements AuthDataSourceHandler {
 
 	private final DataSource dataSource;
 

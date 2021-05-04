@@ -1,4 +1,4 @@
-package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.modules.datasources.oracle;
+package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.config.dataSource;
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -49,6 +50,7 @@ public class OracleDataSourceConfig {
 		return new KeyDataSourceProperties();
 	}
 
+	@Profile("!local")
 	@Bean(name = "oracle")
 	public DataSource oracle(KeyDataSourceProperties properties) // NOSONAR
 			throws FileNotFoundException, SQLException {

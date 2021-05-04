@@ -1,4 +1,4 @@
-package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.config;
+package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.app.config.dataSource;
 
 import java.util.Map;
 
