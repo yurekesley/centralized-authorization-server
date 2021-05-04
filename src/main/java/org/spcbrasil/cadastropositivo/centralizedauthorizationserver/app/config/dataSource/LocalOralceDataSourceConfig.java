@@ -27,6 +27,7 @@ public class LocalOralceDataSourceConfig {
 		SingleConnectionDataSource dataSource = new SingleConnectionDataSource();
 		dataSource.setUrl(env.getProperty("jdbc.url"));
 		dataSource.setUsername(env.getProperty("jdbc.username"));
+		dataSource.setSchema(env.getProperty("jdbc.schema"));
 		dataSource.setPassword(env.getProperty("jdbc.password"));
 		dataSource.setSuppressClose(true);
 		return dataSource;
