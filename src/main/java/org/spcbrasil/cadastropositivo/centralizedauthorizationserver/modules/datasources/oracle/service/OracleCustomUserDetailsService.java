@@ -1,11 +1,13 @@
 package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.modules.datasources.oracle.service;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.modules.datasources.oracle.entity.Operador;
+import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.modules.datasources.oracle.entity.Role;
 import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.modules.datasources.oracle.mapper.OperadorRowMapper;
 import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.modules.datasources.oracle.mapper.RoleRowMapper;
 import org.spcbrasil.cadastropositivo.centralizedauthorizationserver.modules.datasources.oracle.util.UsuarioPorCodigoOperadorQueryBuilder;
@@ -29,10 +31,9 @@ public class OracleCustomUserDetailsService implements UserDetailsService {
 
 	static final String ROLE_ANONYMOUS = "ROLE_ANONYMOUS";
 	static final String ROLE_USER = "USER";
+
+	// TODO VERIFICAR COMO RESOLVER A QUESTÃO DA VISUALIZAÇÃO
 	static final String ROLE_READ_PREFIX = "ROLE_READ_";
-	static final String ROLE_CREATE_PREFIX = "ROLE_CREATE_";
-	static final String ROLE_UPDATE_PREFIX = "ROLE_UPDATE_";
-	static final String ROLE_REMOVE_PREFIX = "ROLE_REMOVE_";
 
 	private final JdbcTemplate jdbcTemplate;
 
@@ -53,15 +54,19 @@ public class OracleCustomUserDetailsService implements UserDetailsService {
 	}
 
 	private List<GrantedAuthority> getUserRoles(String username) {
-
+		
 		List<GrantedAuthority> roles = jdbcTemplate.query(new UsuarioPorCodigoOperadorQueryBuilder().build(),
 				new RoleRowMapper(), new Object[] { username });
 
-		List<GrantedAuthority> rolesPadrao = Arrays.asList(new SimpleGrantedAuthority(ROLE_ANONYMOUS),
-				new SimpleGrantedAuthority(ROLE_USER));
-
-		roles.addAll(rolesPadrao);
+		this.adicionarRolesPadrao(roles);
 
 		return roles;
+	}
+
+	private void adicionarRolesPadrao(List<GrantedAuthority> roles) {
+		List<GrantedAuthority> rolesPadrao = Arrays.asList(new Role(ROLE_ANONYMOUS),
+				new Role(ROLE_USER));
+		roles.addAll(rolesPadrao);
+		roles.removeAll(Collections.singletonList(null));
 	}
 }

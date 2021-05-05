@@ -13,6 +13,10 @@ public class Role implements GrantedAuthority {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	public Role(String role) {
+		this.role = role;
+	}
+
 	private String subSistema;
 	private Integer idPerfil;
 	private String role;

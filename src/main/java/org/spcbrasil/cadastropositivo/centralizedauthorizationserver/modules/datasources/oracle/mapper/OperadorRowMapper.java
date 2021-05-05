@@ -14,9 +14,9 @@ import org.springframework.security.core.GrantedAuthority;
  */
 public class OperadorRowMapper implements RowMapper<Operador> {
 
-	private final List<GrantedAuthority> roles;
+	private final List<? extends GrantedAuthority> roles;
 
-	public OperadorRowMapper(List<GrantedAuthority> roles) {
+	public OperadorRowMapper(List<? extends GrantedAuthority> roles) {
 		this.roles = roles;
 	}
 

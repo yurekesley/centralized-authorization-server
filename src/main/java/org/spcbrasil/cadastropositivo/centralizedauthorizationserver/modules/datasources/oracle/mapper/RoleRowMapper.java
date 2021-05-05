@@ -11,12 +11,20 @@ import org.springframework.security.core.GrantedAuthority;
  * @author yure.placido
  *
  */
-public class RoleRowMapper implements RowMapper<GrantedAuthority>{
+public class RoleRowMapper implements RowMapper<GrantedAuthority> {
 
 	@Override
 	public Role mapRow(ResultSet rs, int rowNum) throws SQLException {
-		Role role = new Role();
-		
+
+		Role role = null;
+
+		if (rs.next()) {
+			role = new Role(rs.getString("role"));
+			role.setSubSistema(rs.getString("id"));
+			role.setIdPerfil(rs.getInt("id"));
+			role.setTipoPermisao(rs.getString("tipoPermisao"));
+		}
+
 		return role;
 	}
 
