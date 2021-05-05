@@ -12,8 +12,6 @@ import org.springframework.security.core.userdetails.User;
 public class Operador extends User {
 
 	private static final long serialVersionUID = 1L;
-	static final String ROLE_ANONYMOUS = "ROLE_ANONYMOUS";
-	static final String ROLE_USER = "ROLE_USER";
 
 	private String id;
 	private String codigo;

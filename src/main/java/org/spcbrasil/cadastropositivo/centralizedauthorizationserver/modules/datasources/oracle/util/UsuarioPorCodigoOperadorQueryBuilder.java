@@ -4,7 +4,7 @@ package org.spcbrasil.cadastropositivo.centralizedauthorizationserver.modules.da
  * @author yure.placido
  *
  */
-public class UsuarioPorCodigoOperadorQueryBuilder {
+public final class UsuarioPorCodigoOperadorQueryBuilder {
 
 	public String build() {
 
